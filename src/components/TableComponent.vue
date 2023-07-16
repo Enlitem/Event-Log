@@ -5,10 +5,12 @@
     :value="products"
     tableStyle="min-width: 50rem"
     paginator
+    stripedRows
     :rows="4"
     dataKey="id"
     filterDisplay="row"
     :rowStyle="rowStyle"
+    class="p-datatable-sm"
   >
     <template #header>
       <div>
