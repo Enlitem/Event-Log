@@ -7,6 +7,7 @@
     :rows="4"
     dataKey="id"
     filterDisplay="row"
+    :rowStyle="rowStyle"
   >
     <Column field="date" header="Дата"></Column>
     <Column field="priority" header="Важность"></Column>
@@ -37,12 +38,17 @@ import { ProductData } from '@/data/data';
 const filters = ref({
   message: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
+const products = ref();
+const rowStyle = (data) => {
+  if (!data.isRead) {
+    return { fontWeight: 'bold' };
+  }
+};
+
 onMounted(() => {
   ProductData.getProducts().then((data) => (products.value = data));
 });
-
-const products = ref();
 </script>
 
-<style>
+<style scoped>
 </style>
