@@ -1,16 +1,19 @@
 <template>
   <div class="container">
-    <SelectButton v-model="selected" :options="['Таблица', 'Карточки']" aria-labelledby="basic" />
-    <Table v-if="selected === 'Таблица'"></Table>
-    <div v-else>Cards</div>
+    <TabView>
+      <TabPanel header="Таблица">
+        <Table></Table>
+      </TabPanel>
+      <TabPanel header="Карточки">
+        <div>Cards</div>
+      </TabPanel>
+    </TabView>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 import Table from './components/TableComponent.vue';
-
-const selected = ref('Таблица');
 </script>
 
 <style scoped>
@@ -19,4 +22,9 @@ const selected = ref('Таблица');
   flex-direction: column;
   min-height: 100wh;
 }
+
+:deep(.p-tabview .p-tabview-panels){
+  padding: 0;
+}
+
 </style>
