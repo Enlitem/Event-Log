@@ -1,6 +1,7 @@
 <template>
   <DataTable
     v-model:filters="filters"
+    v-model:selection="selectedMessages"
     :value="products"
     tableStyle="min-width: 50rem"
     paginator
@@ -9,6 +10,18 @@
     filterDisplay="row"
     :rowStyle="rowStyle"
   >
+    <template #header>
+      <div>
+        <ButtonComponent
+          type="button"
+          icon="pi pi-check-square"
+          label="Прочитано"
+          outlined
+          @click="markAsRead(selectedMessages)"
+        />
+      </div>
+    </template>
+    <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
     <Column field="date" header="Дата"></Column>
     <Column field="priority" header="Важность"></Column>
     <Column field="furniture" header="Оборудование"></Column>
@@ -35,14 +48,19 @@ import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from 'primevue/api';
 import { ProductData } from '@/data/data';
 
+const selectedMessages = ref();
+const products = ref();
 const filters = ref({
   message: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
-const products = ref();
 const rowStyle = (data) => {
   if (!data.isRead) {
     return { fontWeight: 'bold' };
   }
+};
+const markAsRead = (messages) => {
+  messages.forEach((item) => item.isRead = true)
+  selectedMessages.value = []
 };
 
 onMounted(() => {
